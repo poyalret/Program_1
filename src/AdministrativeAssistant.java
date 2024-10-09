@@ -1,3 +1,8 @@
+//CSC 205: 26063
+//Program: 1
+//Author(s): Jacob Meacham (id: 37025281)
+//Description: Defines the class AdministrativeAssistant which inherits from the abstract class Employee and the interface Hourly
+
 public class AdministrativeAssistant extends Employee implements Hourly {
     // Data
     protected int hours;
@@ -27,6 +32,6 @@ public class AdministrativeAssistant extends Employee implements Hourly {
     }
 
     public String toString() {
-        return name + " Hourly Wage: " + salary + " Cash: " + cash + " " + getClass().getName();
+        return name + " Hourly Wage: " + salary + " Cash: " + cash + " Administrative Assistant";
     }
 }

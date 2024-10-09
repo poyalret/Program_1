@@ -1,3 +1,8 @@
+//CSC 205: 26063
+//Program: 1
+//Author(s): Jacob Meacham (id: 37025281)
+//Description: Presents the user a menu and allows them to manage employees in a company.
+
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -17,9 +22,9 @@ public class Company {
         do {
             user_input = menu();
 
-            if (user_input == 'a') {
+            if (user_input == 'a') { // Add an Employee
                 if (crew.size() >= max_employees) {
-                    // print error
+                    System.out.println("Already at maximum number of employees!");
                 }
                 else {
                     String name;
@@ -29,17 +34,19 @@ public class Company {
                     boolean works_hourly;
 
                     System.out.println("What is their name?");
-                    name = scnr.next();
+                    name = scnr.nextLine();
 
                     System.out.println("What is their salary (yearly or hourly)?");
                     salary = scnr.nextDouble();
+                    scnr.nextLine();
 
                     System.out.println("Are they an hourly worker? (Y/N)");
-                    works_hourly = scnr.next().equalsIgnoreCase("Y");
+                    works_hourly = scnr.nextLine().equalsIgnoreCase("Y");
 
                     if (works_hourly) {
                         System.out.println("How many hours per week do they work?");
                         hours = scnr.nextInt();
+                        scnr.nextLine();
 
                         AdministrativeAssistant obj = new AdministrativeAssistant(name, salary, hours);
                         crew.add(obj);
@@ -49,38 +56,48 @@ public class Company {
                         Employee obj = new SoftwareEngineer(name, salary);
                         crew.add(obj);
                     }
+
+                    System.out.println(name+" was hired!");
                 }
             }
-            else if (user_input == 'b') {
-                for (i = 0; i < crew.size(); ++i) {
-                    System.out.println(crew.get(i).toString());
+            else if (user_input == 'b') { // List all Employees
+                if (crew.isEmpty()) {
+                    System.out.println("Nobody works here!");
+                }
+                else {
+                    for (i = 0; i < crew.size(); ++i) {
+                        System.out.println(crew.get(i).toString());
+                    }
                 }
             }
-            else if (user_input == 'c') {
+            else if (user_input == 'c') { // Give an Employee a Raise
                 String name;
                 double amount;
 
                 boolean match = false;
 
-                System.out.println("Name?");
-                name = scnr.next();
+                System.out.println("Who do you want to give a raise to?");
+                name = scnr.nextLine();
 
                 for (i = 0; i < crew.size(); ++i) {
                     if (crew.get(i).getName().equals(name)) {
                         match = true;
 
-                        System.out.println("How much?");
+                        System.out.println("What raise do you want to give them?");
                         amount = scnr.nextDouble();
+                        scnr.nextLine();
 
                         crew.get(i).giveRaise(amount);
+
+                        System.out.println(crew.get(i).getName() + " is happy!");
                     }
                 }
 
                 if (!match) {
-                    System.out.println("Error");
+                    System.out.println("Nobody under that name works here!");
                 }
             }
-            else if (user_input == 'd') {
+            else if (user_input == 'd') { // Give Paychecks
                 if (crew.isEmpty()) {
                     System.out.print("Error");
                 }
@@ -88,53 +105,58 @@ public class Company {
                     for (i = 0; i < crew.size(); ++i) {
                         crew.get(i).getPaid();
                     }
+                    System.out.println("Hooray for money!");
                 }
             }
-            else if (user_input == 'e') {
+            else if (user_input == 'e') { // Change someone's hours
                 String name;
-                double amount;
+                int hours;
 
                 boolean match = false;
 
-                System.out.println("Name?");
-                name = scnr.next();
+                System.out.println("Change hours for who?");
+                name = scnr.nextLine();
 
                 for (i = 0; i < hourly.size(); ++i) {
                     if (hourly.get(i).getName().equals(name)) {
                         match = true;
 
-                        System.out.println("Hours: "+hourly.get(i).getHours());
-                        System.out.println("New hours?");
-                        amount = scnr.nextDouble();
+                        System.out.println(hourly.get(i).getName()+" currently works "+hourly.get(i).getHours()+" hours per week. What would you like to change it to?");
+                        hours = scnr.nextInt();
+                        scnr.nextLine();
 
-                        crew.get(i).giveRaise(amount);
+                        hourly.get(i).setHours(hours);
+                        System.out.println(hourly.get(i).getName()+" will now work 40 hours per week");
                     }
                 }
 
                 if (!match) {
-                    System.out.println("Error");
+                    System.out.println("Nobody under that name is paid hourly!");
                 }
             }
-
         } while (user_input != 'f');
+
+        System.out.println("Bye!");
     }
 
-    public static char menu() {
+    public static char menu() { // Prints menu and returns user input as a char
         Scanner scnr = new Scanner(System.in);
 
         char input;
 
-        System.out.println("a. Add an Employee");
-        System.out.println("b. List all Employees");
-        System.out.println("c. Give an Employee a raise");
-        System.out.println("d. Give Paychecks");
-        System.out.println("e. Change someone’s hours");
-        System.out.println("f. Quit");
-        System.out.println();
+        System.out.println("What do you want to do?");
+        System.out.println("A. Add an Employee");
+        System.out.println("B. List all Employees");
+        System.out.println("C. Give an Employee a Raise");
+        System.out.println("D. Give Paychecks");
+        System.out.println("E. Change someones hours");
+        System.out.println("F. Quit");
 
-        do {
-            input = scnr.next().charAt(0);
-        } while (input < 'a' || input > 'f');
+        input = scnr.nextLine().charAt(0);
+        while (input < 'a' || input > 'f') {
+            System.out.println("Invalid option");
+            input = scnr.nextLine().charAt(0);
+        }
 
         return input;
     }

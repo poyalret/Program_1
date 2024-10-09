@@ -1,7 +1,11 @@
+//CSC 205: 26063
+//Program: 1
+//Author(s): Jacob Meacham (id: 37025281)
+//Description: Defines the abstract class Employee
+
 abstract class Employee {
     // Data
     protected String name;
-
     protected double salary;
     protected double cash;
 
@@ -23,7 +27,7 @@ abstract class Employee {
     }
 
     public String toString() {
-        return name + " Salary: " + salary + " Cash: " + cash + " " + getClass().getName();
+        return name + " Salary: " + salary + " Cash: " + cash;
     }
 
     public abstract void giveRaise(double percentage);
